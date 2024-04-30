@@ -7,4 +7,5 @@ urlpatterns = [
     path("@<str:username>/", users_views.PublicUser.as_view()),
     path("change-password", users_views.ChangePassword.as_view()),
     path("log-in", users_views.LogIn.as_view()),
+    path("log-out", users_views.LogOut.as_view()),
 ]

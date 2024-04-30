@@ -104,3 +104,13 @@ class LogIn(APIView):
                 {"detail": "Invalid credentials"},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
+
+class LogOut(APIView):
+    
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request):
+        logout(request)
+        return Response(
+            {"detail": "Logged out"},
+        )

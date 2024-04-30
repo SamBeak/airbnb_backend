@@ -81,3 +81,26 @@ class ChangePassword(APIView):
             )
         else:
             raise PermissionDenied
+
+class LogIn(APIView):
+    
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+        if not username or not password:
+            raise ParseError
+        user = authenticate(
+            request,
+            username=username,
+            password=password,
+        )
+        if user:
+            login(request, user)
+            return Response(
+                {"detail": "Logged in"},
+            )
+        else:
+            return Response(
+                {"detail": "Invalid credentials"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )

@@ -5,7 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound, ParseError, PermissionDenied
 from rest_framework.permissions import IsAuthenticated
-from .serializers import PrivateUserSerializer, PublicUserSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import PrivateUserSerializer, PublicUserSerializer, CustomTokenObtainPairSerializer
 from .models import User
 
 
@@ -114,3 +115,6 @@ class LogOut(APIView):
         return Response(
             {"detail": "Logged out"},
         )
+
+class SimpleJWTLogIn(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer

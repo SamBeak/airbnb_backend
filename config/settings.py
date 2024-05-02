@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 import environ
+from datetime import timedelta
 
 env = environ.Env()
 
@@ -151,8 +152,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": env("ACCESS_TOKEN_LIFETIME"),
-    "REFRESH_TOKEN_LIFETIEM": env("REFRESH_TOKEN_LIFETIME"),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIEM": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": True, # True로 설정하면 refresh token이 재발급될 때마다 이전 refresh token은 사용할 수 없게 됨
     "BLACKLIST_AFTER_ROTATION": True, # Blacklist에 추가된 토큰은 사용할 수 없게 됨
     "UPDATE_LAST_LOGIN": True, # True로 설정하면 토큰이 갱신될 때마다 사용자의 last_login 필드가 업데이트됨

@@ -3,9 +3,11 @@ from django.conf import settings
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.request import Request
 from rest_framework.exceptions import NotFound, ParseError, PermissionDenied
 from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.exceptions import InvalidToken
 from .serializers import PrivateUserSerializer, PublicUserSerializer, CustomTokenObtainPairSerializer
 from .models import User
 
@@ -121,11 +123,30 @@ class SimpleJWTLogIn(TokenObtainPairView):
     
 class LoginAPIView(TokenObtainPairView):
     
-    def post(self, request, *args, **kwargs) -> Response:
+    def post(self, request: Request, *args, **kwargs) -> Response:
         res = super().post(request, *args, **kwargs)
         
         response = Response({"detail": "Logged in"}, status=status.HTTP_200_OK)
         response.set_cookie("refresh_token", res.data.get("refresh", None), httponly=True)
         response.set_cookie("access_token", res.data.get("access", None), httponly=True)
+        
+        return response
+    
+class CustomTokenRefreshView(TokenRefreshView):
+    
+    def post(self, request: Request, *args, **kwargs) -> Response:
+        refresh_token = request.COOKIES.get("refresh_token", "no refresh token")
+        data = {"refresh": refresh_token}
+        serializer = self.get_serializer(data=data)
+        
+        try:
+            serializer.is_valid(raise_exception=True)
+        except Exception as e:
+            raise InvalidToken(e.args[0])
+        
+        token = serializer.validated_data
+        response = Response({"detail": "Token refreshed"}, status=status.HTTP_200_OK)
+        response.set_cookie("access_token", token["access"], httponly=True)
+        response.set_cookie("refresh_token", token["refresh"], httponly=True)
         
         return response

@@ -9,5 +9,6 @@ urlpatterns = [
     path("log-out", users_views.LogOut.as_view()),
     path("simple-jwt-login", users_views.SimpleJWTLogIn.as_view(), name="simple-jwt-login"),
     path("login", users_views.LoginAPIView.as_view()),
+    path("resfresh-token", users_views.CustomTokenRefreshView.as_view()),
     path("@<str:username>/", users_views.PublicUser.as_view()),
 ]

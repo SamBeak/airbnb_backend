@@ -118,3 +118,14 @@ class LogOut(APIView):
 
 class SimpleJWTLogIn(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+    
+class LoginAPIView(TokenObtainPairView):
+    
+    def post(self, request, *args, **kwargs) -> Response:
+        res = super().post(request, *args, **kwargs)
+        
+        response = Response({"detail": "Logged in"}, status=status.HTTP_200_OK)
+        response.set_cookie("refresh_token", res.data.get("refresh", None), httponly=True)
+        response.set_cookie("access_token", res.data.get("access", None), httponly=True)
+        
+        return response

@@ -48,6 +48,13 @@ class Room(CommonModel):
         "rooms.Amenity",
         related_name = "rooms",
     )
+    category = models.ForeignKey(
+        "categories.Category",
+        null = True,
+        blank = True,
+        on_delete = models.SET_NULL,
+        related_name = "rooms",
+    )
     
     def __str__(room) -> str:
         return room.name

@@ -50,6 +50,7 @@ CUSTOM_APPS = [
     'reviews.apps.ReviewsConfig',
     'experiences.apps.ExperiencesConfig',
     'categories.apps.CategoriesConfig',
+    'wishlists.apps.WishlistsConfig',
 ]
 
 SYSTEM_APPS = [

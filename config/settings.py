@@ -46,6 +46,10 @@ THIRD_PARTY_APPS = [
 
 CUSTOM_APPS = [
     'users.apps.UsersConfig',
+    'rooms.apps.RoomsConfig',
+    'reviews.apps.ReviewsConfig',
+    'experiences.apps.ExperiencesConfig',
+    'categories.apps.CategoriesConfig',
 ]
 
 SYSTEM_APPS = [

@@ -51,6 +51,7 @@ CUSTOM_APPS = [
     'experiences.apps.ExperiencesConfig',
     'categories.apps.CategoriesConfig',
     'wishlists.apps.WishlistsConfig',
+    'direct_messages.apps.DirectMessagesConfig',
 ]
 
 SYSTEM_APPS = [

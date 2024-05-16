@@ -8,11 +8,11 @@ class Wishlist(CommonModel):
     name = models.CharField(
         max_length = 150,
     )
-    room = models.ForeignKey(
+    room = models.ManyToManyField(
         "rooms.Room",
         related_name = "wishlists",
     )
-    experiences = models.ForeignKey(
+    experiences = models.ManyToManyField(
         "experiences.Experience",
         related_name = "wishlists",
     )
